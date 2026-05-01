@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math Quest 10 — Ôn tập Toán lớp 10</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,600;1,9..144,800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117; --bg-2: #161b22; --bg-3: #1f2937;
+    --ink: #f0ebe1; --ink-dim: #8b95a7;
+    --accent: #ffd23f; --accent-2: #ff6b6b; --accent-3: #4ecdc4;
+    --correct: #6bcf7f; --wrong: #ff6b6b;
+    --card: rgba(255,255,255,0.04); --card-border: rgba(255,255,255,0.1);
+    --gold: #ffd23f; --silver: #c0c0c0; --bronze: #cd7f32;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Fraunces', serif; background: var(--bg); color: var(--ink); min-height: 100vh; overflow-x: hidden; position: relative; line-height: 1.5; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 800px 600px at 15% 5%, rgba(255,210,63,0.08), transparent 50%), radial-gradient(ellipse 600px 800px at 90% 90%, rgba(78,205,196,0.06), transparent 50%); pointer-events: none; z-index: 0; }
+  body::after { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px); background-size: 50px 50px; pointer-events: none; z-index: 0; }
+  .container { max-width: 920px; margin: 0 auto; padding: 32px 20px 60px; position: relative; z-index: 1; }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid var(--card-border); flex-wrap: wrap; gap: 12px; }
+  .logo { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; font-style: italic; cursor: pointer; user-select: none; }
+  .logo span { color: var(--accent); }
+  .tagline { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.25em; }
+  .screen { display: none; animation: fadeIn 0.5s ease; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .hero { text-align: center; padding: 20px 0 40px; }
+  .hero-decoration { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.3em; margin-bottom: 16px; opacity: 0.7; }
+  .hero h1 { font-size: clamp(44px, 9vw, 88px); font-weight: 900; line-height: 0.92; letter-spacing: -0.045em; margin-bottom: 20px; }
+  .hero h1 em { font-style: italic; color: var(--accent); display: block; font-weight: 800; }
+  .hero p { font-size: 17px; color: var(--ink-dim); max-width: 520px; margin: 0 auto 24px; line-height: 1.65; }
+  .stats-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; }
+  .stat-mini { text-align: center; }
+  .stat-mini .num { font-size: 32px; font-weight: 800; color: var(--accent); font-style: italic; display: block; line-height: 1; }
+  .stat-mini .lbl { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.2em; margin-top: 6px; }
+  .name-input-wrap { max-width: 420px; margin: 0 auto 28px; }
+  .name-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 10px; text-align: left; }
+  .name-input { width: 100%; background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 18px 22px; color: var(--ink); font-family: 'Fraunces', serif; font-size: 17px; outline: none; transition: all 0.25s; }
+  .name-input:focus { border-color: var(--accent); background: rgba(255,210,63,0.04); box-shadow: 0 0 0 4px rgba(255,210,63,0.08); }
+  .name-input::placeholder { color: var(--ink-dim); opacity: 0.5; }
+  .actions-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .btn-primary { background: var(--accent); color: var(--bg); border: none; padding: 18px 44px; border-radius: 100px; font-family: 'Fraunces', serif; font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.25s; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,210,63,0.25); }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-secondary { background: transparent; color: var(--ink); border: 1px solid var(--card-border); padding: 16px 28px; border-radius: 100px; font-family: 'Fraunces', serif; font-size: 15px; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--ink-dim); border: none; padding: 8px 16px; font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: color 0.2s; }
+  .btn-ghost:hover { color: var(--accent); }
+  .quiz-header { display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center; margin-bottom: 24px; padding: 18px 24px; background: var(--card); border: 1px solid var(--card-border); border-radius: 18px; }
+  .stat-box { font-family: 'JetBrains Mono', monospace; }
+  .stat-box .lbl { font-size: 9px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 4px; }
+  .stat-box .val { font-size: 22px; font-weight: 700; line-height: 1; }
+  .stat-box .val.timer { color: var(--accent); }
+  .stat-box .val.timer.warn { color: var(--accent-2); animation: pulse 0.6s infinite; }
+  .stat-box .val.score { color: var(--correct); }
+  .stat-box.right { text-align: right; }
+  .stat-box.center { text-align: center; }
+  .progress-bar { height: 4px; background: var(--card-border); border-radius: 100px; overflow: hidden; margin-bottom: 28px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-3), var(--accent)); transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 100px; }
+  .question-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 22px; padding: 36px; margin-bottom: 20px; animation: slideUp 0.4s ease; }
+  .question-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 8px; }
+  .question-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent-3); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700; }
+  .question-topic { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.15em; padding: 4px 10px; border: 1px solid var(--card-border); border-radius: 100px; max-width: 60%; text-align: right; }
+  .question-text { font-size: 22px; font-weight: 600; line-height: 1.5; margin-bottom: 28px; letter-spacing: -0.005em; color: var(--ink); }
+  .options { display: grid; gap: 10px; }
+  .option { background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 22px; cursor: pointer; transition: all 0.2s; font-family: 'Fraunces', serif; font-size: 16px; color: var(--ink); text-align: left; display: flex; align-items: center; gap: 16px; width: 100%; }
+  .option:hover:not(.disabled) { border-color: var(--accent); background: rgba(255,210,63,0.04); transform: translateX(3px); }
+  .option .letter { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.2s; }
+  .option .text { flex: 1; }
+  .option.correct { border-color: var(--correct); background: rgba(107,207,127,0.08); }
+  .option.correct .letter { background: var(--correct); color: var(--bg); }
+  .option.wrong { border-color: var(--wrong); background: rgba(255,107,107,0.08); }
+  .option.wrong .letter { background: var(--wrong); color: var(--bg); }
+  .option.disabled { cursor: not-allowed; }
+  .feedback { margin-top: 18px; padding: 16px 20px; border-radius: 12px; font-size: 15px; display: none; animation: fadeIn 0.3s; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: rgba(107,207,127,0.08); border: 1px solid rgba(107,207,127,0.3); color: var(--correct); }
+  .feedback.wrong { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.3); color: var(--wrong); }
+  .feedback-title { font-weight: 700; margin-bottom: 4px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .feedback-body { color: var(--ink); font-size: 14px; line-height: 1.5; }
+  .next-row { display: flex; justify-content: flex-end; margin-top: 20px; }
+  .btn-next { background: var(--accent-3); color: var(--bg); border: none; padding: 14px 32px; border-radius: 100px; font-family: 'Fraunces', serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: none; align-items: center; gap: 8px; }
+  .btn-next.show { display: inline-flex; }
+  .btn-next:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(78,205,196,0.3); }
+  .result-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 24px; padding: 48px 36px; text-align: center; margin-bottom: 24px; }
+  .result-emoji { font-size: 72px; margin-bottom: 16px; line-height: 1; }
+  .result-title { font-size: 36px; font-weight: 800; font-style: italic; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .result-subtitle { color: var(--ink-dim); font-size: 16px; margin-bottom: 32px; }
+  .score-big { font-size: 88px; font-weight: 900; color: var(--accent); font-style: italic; line-height: 1; letter-spacing: -0.04em; }
+  .score-out { color: var(--ink-dim); font-size: 22px; font-weight: 400; font-style: normal; }
+  .result-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; padding: 24px 0; border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); }
+  .result-stat .v { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .result-stat .l { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.15em; }
+  .result-stat .v.green { color: var(--correct); }
+  .result-stat .v.red { color: var(--wrong); }
+  .result-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .review-section { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--card-border); }
+  .review-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 20px; }
+  .review-item { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; margin-bottom: 12px; }
+  .review-item.correct { border-left: 3px solid var(--correct); }
+  .review-item.wrong { border-left: 3px solid var(--wrong); }
+  .review-q { font-size: 15px; font-weight: 600; margin-bottom: 10px; line-height: 1.5; }
+  .review-meta { display: flex; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); flex-wrap: wrap; }
+  .review-meta .your.right { color: var(--correct); }
+  .review-meta .your.wrong { color: var(--wrong); }
+  .review-meta .correct-ans { color: var(--accent); }
+  .leaderboard { background: var(--card); border: 1px solid var(--card-border); border-radius: 18px; padding: 28px; margin-bottom: 24px; }
+  .leaderboard-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+  .leaderboard-title { font-size: 24px; font-weight: 800; font-style: italic; letter-spacing: -0.02em; }
+  .leaderboard-subtitle { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.2em; }
+  .lb-row { display: grid; grid-template-columns: 40px 1fr auto auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row.me { background: rgba(255,210,63,0.04); margin: 0 -12px; padding: 14px 12px; border-radius: 10px; border-bottom: none; }
+  .lb-rank { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; color: var(--ink-dim); text-align: center; }
+  .lb-row.gold .lb-rank { color: var(--gold); font-size: 18px; }
+  .lb-row.silver .lb-rank { color: var(--silver); font-size: 17px; }
+  .lb-row.bronze .lb-rank { color: var(--bronze); font-size: 16px; }
+  .lb-name { font-size: 16px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lb-row.me .lb-name::after { content: ' ★'; color: var(--accent); }
+  .lb-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); }
+  .lb-score { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
+  .empty-lb { text-align: center; padding: 40px 20px; color: var(--ink-dim); font-style: italic; }
+  footer { text-align: center; margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--card-border); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-dim); letter-spacing: 0.1em; }
+  .history-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .history-info { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-dim); }
+  .history-score { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--accent); }
+  @media (max-width: 640px) {
+    .container { padding: 24px 16px 40px; }
+    .question-card { padding: 24px 20px; }
+    .result-card { padding: 36px 24px; }
+    .question-text { font-size: 18px; }
+    .option { font-size: 15px; padding: 14px 18px; }
+    .quiz-header { padding: 14px 18px; gap: 12px; }
+    .stat-box .val { font-size: 18px; }
+    .lb-row { grid-template-columns: 32px 1fr auto auto; gap: 10px; }
+    .lb-name { font-size: 14px; }
+    .result-stats { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .result-stat .v { font-size: 18px; }
+    .score-big { font-size: 64px; }
+    .score-out { font-size: 18px; }
+    .hero h1 { font-size: 44px; }
+    .question-topic { max-width: 100%; text-align: left; }
+  }
+  .confetti { position: fixed; top: -10px; width: 8px; height: 8px; pointer-events: none; z-index: 999; }
+  .loading-dots::after { content: '...'; display: inline-block; animation: dots 1.4s infinite; width: 24px; text-align: left; }
+  @keyframes dots { 0%, 20% { content: '.'; } 40% { content: '..'; } 60%, 100% { content: '...'; } }
+/* DASHBOARD STYLES */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.dash-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.dash-card .lbl {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 8px;
+}
+
+.dash-card .val {
+  font-size: 32px;
+  font-weight: 800;
+  font-style: italic;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.dash-card .sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 6px;
+}
+
+.dash-section {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.dash-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-section-title small {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Histogram */
+.histogram {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 200px;
+  margin-bottom: 12px;
+  padding: 0 8px;
+}
+
+.hist-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.hist-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--accent), var(--accent-3));
+  border-radius: 6px 6px 0 0;
+  min-height: 3px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  cursor: default;
+}
+
+.hist-bar:hover {
+  filter: brightness(1.15);
+}
+
+.hist-bar .count {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.hist-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 8px;
+}
+
+/* Question stats */
+.qstat-item {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.qstat-item:last-child { border-bottom: none; }
+
+.qstat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.qstat-q {
+  font-size: 14px;
+  font-weight: 600;
+  flex: 1;
+  line-height: 1.5;
+}
+
+.qstat-rate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.qstat-rate.high { color: var(--wrong); }
+.qstat-rate.mid { color: var(--accent); }
+.qstat-rate.low { color: var(--correct); }
+
+.qstat-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.qstat-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+}
+
+.qstat-bar-fill.high { background: var(--wrong); }
+.qstat-bar-fill.mid { background: var(--accent); }
+.qstat-bar-fill.low { background: var(--correct); }
+
+.qstat-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+
+.qstat-meta .topic {
+  padding: 2px 8px;
+  border: 1px solid var(--card-border);
+  border-radius: 100px;
+  font-size: 10px;
+}
+
+/* Student table */
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.students-table th.num { text-align: right; }
+
+.students-table td {
+  padding: 12px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.students-table td.num {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+.students-table td.score {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.students-table td.score.green { color: var(--correct); }
+.students-table td.score.amber { color: var(--accent); }
+.students-table td.score.red { color: var(--wrong); }
+
+.students-table tbody tr:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.students-table .name-cell {
+  font-weight: 600;
+}
+
+/* Login modal */
+.login-overlay {
+  background: rgba(13,17,23,0.95);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.login-box {
+  background: var(--bg-2);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 36px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.login-box h2 {
+  font-size: 26px;
+  font-weight: 800;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.login-box p {
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.login-error {
+  color: var(--wrong);
+  font-size: 13px;
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+.refresh-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+}
+
+.refresh-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-dim);
+}
+
+.refresh-status .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--correct);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.refresh-status.error .dot { background: var(--wrong); }
+.refresh-status.loading .dot { background: var(--accent); animation: pulse 1s infinite; }
+
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 100px;
+  padding: 8px 16px;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-icon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.config-warning {
+  background: rgba(255,210,63,0.08);
+  border: 1px solid rgba(255,210,63,0.3);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.config-warning strong { color: var(--accent); }
+.config-warning code {
+  background: rgba(0,0,0,0.3);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.cloud-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 8px;
+  opacity: 0.6;
+}
+
+.cloud-status .ok { color: var(--correct); }
+.cloud-status .warn { color: var(--accent); }
+.cloud-status .err { color: var(--wrong); }
+
+.level-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.level-tag.biet { background: rgba(78,205,196,0.15); color: var(--accent-3); }
+.level-tag.hieu { background: rgba(255,210,63,0.15); color: var(--accent); }
+
+.matrix-info {
+  background: rgba(78,205,196,0.06);
+  border: 1px solid rgba(78,205,196,0.2);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin: 16px auto;
+  max-width: 560px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  text-align: center;
+}
+.matrix-info strong { color: var(--accent-3); }
+
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">Math <em>Quest</em><span>.</span></div>
+    <div class="tagline">Toán 10 — Ôn tập</div>
+  </header>
+
+  <div class="screen active" id="screen-home">
+    <div class="hero">
+      <div class="hero-decoration">— ÔN TẬP —</div>
+      <h1>Toán 10<br><em>Phần I</em></h1>
+      <p>Trắc nghiệm khách quan theo ma trận chuẩn — 10 dạng cơ bản (Biết) + 2 dạng nâng cao (Hiểu). Mỗi đề 12 câu, 12 phút.</p>
+
+      <div class="matrix-info">
+        <strong>Đề thi tuân thủ ma trận</strong> — mỗi lần làm bài, hệ thống tự sinh đề mới với 1 câu cho mỗi dạng trong 12 dạng kiến thức.
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-mini"><span class="num" id="stat-pool">117</span><div class="lbl">Câu hỏi</div></div>
+        <div class="stat-mini"><span class="num">12</span><div class="lbl">Dạng</div></div>
+        <div class="stat-mini"><span class="num">12<span style="font-size:18px;color:var(--ink-dim)">′</span></span><div class="lbl">Thời gian</div></div>
+      </div>
+
+      <div class="name-input-wrap">
+        <div class="name-label">Họ và tên của bạn</div>
+        <input type="text" class="name-input" id="player-name" placeholder="Nhập tên của bạn..." maxlength="40">
+      </div>
+
+      <div class="actions-row">
+        <button class="btn-primary" id="btn-start" disabled>Bắt đầu làm bài →</button>
+      </div>
+
+      <button class="btn-ghost" id="btn-show-leaderboard">Xem bảng xếp hạng</button>
+      <button class="btn-ghost" id="btn-show-history" style="display:none;">Lịch sử của tôi</button>
+
+      <div class="cloud-status" id="cloud-status"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-quiz">
+    <div class="quiz-header">
+      <div class="stat-box"><div class="lbl">Câu hỏi</div><div class="val"><span id="q-current">1</span><span style="color:var(--ink-dim);font-size:14px">/12</span></div></div>
+      <div class="stat-box center"><div class="lbl">Điểm</div><div class="val score" id="q-score">0</div></div>
+      <div class="stat-box right"><div class="lbl">Còn lại</div><div class="val timer" id="q-timer">12:00</div></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    <div class="question-card" id="question-card"></div>
+    <div class="next-row"><button class="btn-next" id="btn-next">Câu tiếp theo →</button></div>
+  </div>
+
+  <div class="screen" id="screen-result">
+    <div class="result-card">
+      <div class="result-emoji" id="r-emoji">🎉</div>
+      <div class="result-title" id="r-title">Hoàn thành!</div>
+      <div class="result-subtitle" id="r-subtitle">Bạn đã làm xong bài kiểm tra</div>
+      <div><span class="score-big" id="r-score">0</span><span class="score-out">/12</span></div>
+      <div class="result-stats">
+        <div class="result-stat"><div class="v green" id="r-correct">0</div><div class="l">Đúng</div></div>
+        <div class="result-stat"><div class="v red" id="r-wrong">0</div><div class="l">Sai</div></div>
+        <div class="result-stat"><div class="v" id="r-time">00:00</div><div class="l">Thời gian</div></div>
+      </div>
+      <div class="result-actions">
+        <button class="btn-primary" id="btn-retry">Làm đề khác →</button>
+        <button class="btn-secondary" id="btn-home">Về trang chủ</button>
+      </div>
+    </div>
+    <div class="review-section">
+      <div class="review-title">— Xem lại bài làm —</div>
+      <div id="review-list"></div>
+    </div>
+    <div class="review-section">
+      <div class="review-title">— Bảng xếp hạng —</div>
+      <div id="result-leaderboard"></div>
+    </div>
+  </div>
+
+  <div class="screen" id="screen-leaderboard">
+    <div class="leaderboard">
+      <div class="leaderboard-header"><div class="leaderboard-title">Bảng xếp hạng</div><div class="leaderboard-subtitle">Top học sinh</div></div>
+      <div id="lb-list"></div>
+    </div>
+    <div style="text-align:center;"><button class="btn-secondary" id="btn-back-from-lb">← Quay lại</button></div>
+  </div>
+
+  <div class="screen" id="screen-history">
+    <div class="leaderboard">
+      <div class="leaderboard-header"><div class="leaderboard-title">Lịch sử của bạn</div><div class="leaderboard-subtitle" id="history-name"></div></div>
+      <div id="history-list"></div>
+    </div>
+    <div style="text-align:center;"><button class="btn-secondary" id="btn-back-from-history">← Quay lại</button></div>
+  </div>
+
+  <div class="screen" id="screen-dashboard">
+    <div class="leaderboard-header" style="margin-bottom:20px;">
+      <div class="leaderboard-title">Dashboard giáo viên</div>
+      <div class="leaderboard-subtitle">Phân tích kết quả</div>
+    </div>
+    <div class="refresh-bar">
+      <div class="refresh-status" id="refresh-status"><span class="dot"></span>Sẵn sàng</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-icon" id="btn-dash-refresh">↻ Làm mới</button>
+        <button class="btn-icon" id="btn-dash-home">← Trang chủ</button>
+      </div>
+    </div>
+    <div class="dashboard-grid">
+      <div class="dash-card"><div class="lbl">Tổng số lượt</div><div class="val" id="dash-total-attempts">0</div><div class="sub">lượt làm bài</div></div>
+      <div class="dash-card"><div class="lbl">Học sinh</div><div class="val" id="dash-unique-students">0</div><div class="sub">đã tham gia</div></div>
+      <div class="dash-card"><div class="lbl">Điểm trung bình</div><div class="val" id="dash-avg-score">0</div><div class="sub">trên 12</div></div>
+      <div class="dash-card"><div class="lbl">Tỉ lệ đạt (≥6/12)</div><div class="val" id="dash-pass-rate">0%</div><div class="sub">lượt đạt yêu cầu</div></div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">Phân bố điểm số <small>histogram</small></div>
+      <div class="histogram" id="histogram"></div>
+      <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink-dim);letter-spacing:0.15em;text-transform:uppercase;margin-top:12px;">— Số điểm đạt được —</div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">Top 10 câu hỏi sai nhiều nhất <small>tỉ lệ sai cao → thấp</small></div>
+      <div id="qstats-list"></div>
+    </div>
+    <div class="dash-section">
+      <div class="dash-section-title">Danh sách học sinh <small>xếp theo điểm cao nhất</small></div>
+      <div id="students-list"></div>
+    </div>
+  </div>
+
+  <footer><div>MATH QUEST · ÔN TẬP TOÁN 10 · 2025–2026</div></footer>
+</div>
+
+<script>
+const QUESTIONS_POOL = [{"id":"d1c2","from_de":1,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² − 2x + 4y − 4 = 0","x² + y² + 6x − 2y + 15 = 0","2x² + 2y² − 8 = 0","x² + y² + 2x = 0"],"ans":1,"topic":"Đường tròn","exp":"B: R² = 9 + 1 - 15 = -5 < 0, không phải đường tròn.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d2c2","from_de":2,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² + 2x − 4y + 1 = 0","x² + y² − 8 = 0","x² + y² − 2x + 3 = 0","x² + y² − 6x = 0"],"ans":2,"topic":"Đường tròn","exp":"C: R² = 1 - 3 = -2 < 0.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d3c2","from_de":3,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² − 4x + 2y − 4 = 0","x² + y² − 9 = 0","x² + y² + 4x + 5 = 0","x² + y² + 2y = 0"],"ans":2,"topic":"Đường tròn","exp":"C: R² = 4 - 5 = -1 < 0.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d4c2","from_de":4,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² − 2x − 4y + 1 = 0","x² + y² + 3x − y = 0","x² + y² + 4x − 2y + 10 = 0","x² + y² − 16 = 0"],"ans":2,"topic":"Đường tròn","exp":"C: R² = 4 + 1 - 10 = -5 < 0.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d5c2","from_de":5,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² − 6x + 2y − 6 = 0","x² + y² − 4x = 0","x² + y² − 25 = 0","x² + y² + 2x − 4y + 20 = 0"],"ans":3,"topic":"Đường tròn","exp":"D: R² = 1 + 4 - 20 = -15 < 0.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d6c2","from_de":6,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² − 4x + 6y − 3 = 0","x² + y² + 4x − 2y + 10 = 0","2x² + 2y² − 8x = 0","x² + y² − 6y = 0"],"ans":1,"topic":"Đường tròn","exp":"B: R² = 4 + 1 - 10 = -5 < 0.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d7c2","from_de":7,"q":"Phương trình nào sau đây không phải là phương trình đường tròn?","opts":["x² + y² + 6x − 4y − 3 = 0","x² + y² − 4 = 0","x² + y² − 2x + 8 = 0","x² + y² + 4x = 0"],"ans":2,"topic":"Đường tròn","exp":"C: R² = 1 - 8 = -7 < 0.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d8c1","from_de":8,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình đường tròn?","opts":["x²/9 + y²/4 = 1","x² + y² = 49","x² - y² + 2x - 4y + 1 = 0","x² + y² - 2x + 3 = 0"],"ans":1,"topic":"Đường tròn","exp":"B: x² + y² = 49 là đường tròn tâm O, R=7.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d9c1","from_de":9,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình đường tròn?","opts":["x² − y² = 4","x²/4 + y²/9 = 1","x² + y² - 2x + 4y - 1 = 0","x²/9 - y²/16 = 1"],"ans":2,"topic":"Đường tròn","exp":"C: R² = 1 + 4 + 1 = 6 > 0, là đường tròn.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d10c1","from_de":10,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình đường tròn?","opts":["x²/16 + y²/9 = 1","x² + y² + 4x - 6y - 12 = 0","x² − y² = 16","x² + y² + 6x − 2y + 15 = 0"],"ans":1,"topic":"Đường tròn","exp":"B: R² = 4 + 9 + 12 = 25 > 0, là đường tròn.","slot":1,"slot_name":"Nhận biết PT đường tròn","level":"Biết"},{"id":"d1c1","from_de":1,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình của elip?","opts":["x² + y² = 25","x²/9 + y²/7 = 1","x²/25 - y²/9 = 1","x²/4 + y²/4 = 1"],"ans":1,"topic":"Elip","exp":"Phương trình elip có dạng x²/a² + y²/b² = 1 với a≠b. A là đường tròn, C là hyperbol, D là đường tròn (a=b).","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d2c1","from_de":2,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình của elip?","opts":["x²/16 - y²/9 = 1","9x² + 4y² = 36","x²/4 + y²/9 = -1","x² − y² = 1"],"ans":1,"topic":"Elip","exp":"9x²+4y²=36 ↔ x²/4+y²/9=1 là elip.","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d3c1","from_de":3,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình của elip?","opts":["x²/9 - y²/16 = 1","x² + y² = 16","x²/16 + y²/25 = 1","x²/9 + y²/4 = 1"],"ans":2,"topic":"Elip","exp":"C có dạng chuẩn x²/a² + y²/b² = 1 (a≠b).","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d4c1","from_de":4,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình của elip?","opts":["x²/36 + y²/25 = 1","x²/4 - y²/9 = 1","x² + y² = 9","x²/16 + y²/25 = -1"],"ans":0,"topic":"Elip","exp":"A là phương trình elip chuẩn.","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d5c1","from_de":5,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình của elip?","opts":["x²/4 + y²/4 = 1","x²/25 - y²/16 = 1","x²/49 + y²/36 = 1","x²/9 + y²/4 = -1"],"ans":2,"topic":"Elip","exp":"C là elip chuẩn (A là đường tròn vì a=b).","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d6c1","from_de":6,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình chính tắc của elip?","opts":["x²/16 + y²/16 = 1","x²/25 + y²/9 = 1","x²/25 - y²/16 = 1","x² + y² = 25"],"ans":1,"topic":"Elip","exp":"B là elip chuẩn (a≠b).","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d7c1","from_de":7,"q":"Trong các phương trình sau, phương trình nào có thể là phương trình chính tắc của elip?","opts":["x²/9 - y²/4 = 1","x² + y² = 9","x²/36 + y²/16 = 1","x²/4 + y²/9 = -1"],"ans":2,"topic":"Elip","exp":"C là elip chuẩn.","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d8c2","from_de":8,"q":"Trong các phương trình sau, phương trình nào không phải là phương trình chính tắc của elip?","opts":["x²/25 + y²/16 = 1","x²/4 - y²/9 = 1","x²/100 + y²/64 = 1","x²/9 + y²/4 = 1"],"ans":1,"topic":"Elip","exp":"B là phương trình hyperbol (có dấu trừ).","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d9c2","from_de":9,"q":"Trong các phương trình sau, phương trình nào là phương trình chính tắc của elip?","opts":["x²/16 + y²/25 = 1","x²/16 - y²/9 = 1","x²/9 + y²/9 = 1","x² + y² = 25"],"ans":0,"topic":"Elip","exp":"A là elip chuẩn (a²=25 ≠ b²=16).","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d10c2","from_de":10,"q":"Trong các phương trình sau, phương trình nào là phương trình chính tắc của elip?","opts":["4x² + 8y² = 32","x²/9 - y²/4 = 1","x² + y² = 16","x²/9 + y²/9 = 1"],"ans":0,"topic":"Elip","exp":"4x²+8y²=32 ↔ x²/8+y²/4=1 là elip chuẩn.","slot":2,"slot_name":"Nhận biết PT chính tắc elip","level":"Biết"},{"id":"d1c3","from_de":1,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x − 3)² + (y + 1)² = 16, tọa độ tâm của đường tròn đã cho là","opts":["(3; −1)","(−3; 1)","(3; 1)","(−3; −1)"],"ans":0,"topic":"Đường tròn","exp":"Tâm I(3; -1) từ dạng (x-3)² + (y+1)² = 16.","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d2c3","from_de":2,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x + 1)² + y² = 25, tọa độ tâm của đường tròn đã cho là","opts":["(1; 0)","(−1; 0)","(0; −1)","(0; 1)"],"ans":1,"topic":"Đường tròn","exp":"Tâm I(-1; 0).","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d3c3","from_de":3,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x − 2)² + (y − 3)² = 4, tọa độ tâm của đường tròn đã cho là","opts":["(−2; −3)","(2; −3)","(−2; 3)","(2; 3)"],"ans":3,"topic":"Đường tròn","exp":"Tâm I(2; 3).","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d4c3","from_de":4,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): x² + (y + 4)² = 36, tọa độ tâm của đường tròn đã cho là","opts":["(0; 4)","(0; −4)","(4; 0)","(−4; 0)"],"ans":1,"topic":"Đường tròn","exp":"Tâm I(0; -4).","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d5c3","from_de":5,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x + 5)² + (y − 2)² = 49, bán kính của đường tròn đã cho là","opts":["49","7","√7","14"],"ans":1,"topic":"Đường tròn","exp":"R² = 49 ⟹ R = 7.","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d6c3","from_de":6,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x + 2)² + (y − 5)² = 9, tọa độ tâm của đường tròn đã cho là","opts":["(2; 5)","(−2; 5)","(2; −5)","(−2; −5)"],"ans":1,"topic":"Đường tròn","exp":"Tâm I(-2; 5).","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d7c3","from_de":7,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): x² + (y − 3)² = 16, tọa độ tâm của đường tròn đã cho là","opts":["(3; 0)","(0; −3)","(0; 3)","(−3; 0)"],"ans":2,"topic":"Đường tròn","exp":"Tâm I(0; 3).","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d8c3","from_de":8,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x - 4)² + (y + 2)² = 25, tâm và bán kính của đường tròn đã cho lần lượt là","opts":["I(4; −2), R = 25","I(−4; 2), R = 5","I(4; −2), R = 5","I(−4; 2), R = 25"],"ans":2,"topic":"Đường tròn","exp":"Tâm I(4;-2), R = √25 = 5.","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d9c3","from_de":9,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x + 5)² + (y − 4)² = 36, tọa độ tâm và bán kính của đường tròn đã cho lần lượt là","opts":["I(5; −4), R = 6","I(−5; 4), R = 6","I(−5; 4), R = 36","I(5; −4), R = 36"],"ans":1,"topic":"Đường tròn","exp":"Tâm I(-5;4), R = √36 = 6.","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d10c3","from_de":10,"q":"Trong mặt phẳng tọa độ Oxy, cho đường tròn (C): (x - 1)² + (y + 3)² = 49, tọa độ tâm và bán kính của đường tròn đã cho lần lượt là","opts":["I(−1; 3), R = 7","I(1; −3), R = 49","I(1; −3), R = 7","I(−1; 3), R = 49"],"ans":2,"topic":"Đường tròn","exp":"Tâm I(1;-3), R = √49 = 7.","slot":3,"slot_name":"Xác định tâm và bán kính đường tròn","level":"Biết"},{"id":"d1c4","from_de":1,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(−1; 2), B(3; 6).","opts":["4√2","2√2","4","8"],"ans":1,"topic":"Đường tròn","exp":"AB = √(16+16) = 4√2. R = AB/2 = 2√2.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d2c4","from_de":2,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(0; 0), B(6; 8).","opts":["10","5","100","√10"],"ans":1,"topic":"Đường tròn","exp":"AB = √(36+64) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d3c4","from_de":3,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(2; −1), B(4; 3).","opts":["√5","2√5","5","2√10"],"ans":0,"topic":"Đường tròn","exp":"AB = √(4+16) = 2√5. R = √5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d4c4","from_de":4,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(−2; 3), B(4; 11).","opts":["10","5","√10","√5"],"ans":1,"topic":"Đường tròn","exp":"AB = √(36+64) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d5c4","from_de":5,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(1; −2), B(5; 4).","opts":["√13","2√13","13","√52"],"ans":0,"topic":"Đường tròn","exp":"AB = √(16+36) = √52 = 2√13. R = √13.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d6c4","from_de":6,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(1; 2), B(7; 10).","opts":["5","10","√10","25"],"ans":0,"topic":"Đường tròn","exp":"AB = √(36+64) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d7c4","from_de":7,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(−3; 1), B(5; 7).","opts":["10","5","√10","√5"],"ans":1,"topic":"Đường tròn","exp":"AB = √(64+36) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d8c4","from_de":8,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(2; -1), B(8; -9).","opts":["10","5","√10","100"],"ans":1,"topic":"Đường tròn","exp":"AB = √(36+64) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d9c4","from_de":9,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(−1; −2), B(5; 6).","opts":["10","5","√10","25"],"ans":1,"topic":"Đường tròn","exp":"AB = √(36+64) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d10c4","from_de":10,"q":"Trong mặt phẳng tọa độ Oxy, xác định bán kính của đường tròn, biết đường tròn ấy có đường kính AB với A(1; -3), B(7; -11).","opts":["10","5","√10","25"],"ans":1,"topic":"Đường tròn","exp":"AB = √(36+64) = 10. R = 5.","slot":4,"slot_name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},{"id":"d1c5","from_de":1,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 2 = 0.","opts":["y² = 4x","y² = 8x","y² = 2x","y² = 16x"],"ans":1,"topic":"Parabol","exp":"Đường chuẩn x = -2, p/2 = 2, p = 4, y² = 2px = 8x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d2c5","from_de":2,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 3 = 0.","opts":["y² = 6x","y² = 3x","y² = 12x","y² = 9x"],"ans":2,"topic":"Parabol","exp":"p/2 = 3, p = 6, y² = 12x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d3c5","from_de":3,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 1/2 = 0.","opts":["y² = x","y² = 2x","y² = 4x","y² = x/2"],"ans":1,"topic":"Parabol","exp":"p/2 = 1/2, p = 1, y² = 2x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d4c5","from_de":4,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 4 = 0.","opts":["y² = 8x","y² = 4x","y² = 16x","y² = 2x"],"ans":2,"topic":"Parabol","exp":"p/2 = 4, p = 8, y² = 16x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d5c5","from_de":5,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 5/2 = 0.","opts":["y² = 5x","y² = 10x","y² = 5x/2","y² = 20x"],"ans":1,"topic":"Parabol","exp":"p/2 = 5/2, p = 5, y² = 10x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d6c5","from_de":6,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 5 = 0.","opts":["y² = 10x","y² = 5x","y² = 20x","y² = 25x"],"ans":2,"topic":"Parabol","exp":"p/2 = 5, p = 10, y² = 20x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d7c5","from_de":7,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 1 = 0.","opts":["y² = 2x","y² = 4x","y² = x","y² = 8x"],"ans":1,"topic":"Parabol","exp":"p/2 = 1, p = 2, y² = 4x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d9c5","from_de":9,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 3/2 = 0.","opts":["y² = 3x","y² = 6x","y² = 12x","y² = 9x"],"ans":1,"topic":"Parabol","exp":"p/2 = 3/2, p = 3, y² = 6x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d10c5","from_de":10,"q":"Viết phương trình chính tắc của parabol (P) có đường chuẩn Δ: x + 5/2 = 0.","opts":["y² = 5x","y² = 10x","y² = 20x","y² = 25x"],"ans":1,"topic":"Parabol","exp":"p/2 = 5/2, p = 5, y² = 10x.","slot":5,"slot_name":"Xác định đường chuẩn parabol","level":"Biết"},{"id":"d1c6","from_de":1,"q":"Có bao nhiêu số có ba chữ số khác nhau được tạo thành từ các chữ số 1, 2, 3, 4, 5, 6?","opts":["A₆³","C₆³","P₆","P₃"],"ans":0,"topic":"Tổ hợp","exp":"Chọn 3 chữ số khác nhau và sắp xếp = chỉnh hợp = A(6,3).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d2c6","from_de":2,"q":"Có bao nhiêu số có năm chữ số khác nhau được tạo thành từ các chữ số 1, 2, 3, 4, 5, 6, 7?","opts":["A₇⁵","C₇⁵","P₇","P₅"],"ans":0,"topic":"Tổ hợp","exp":"Chọn 5 trong 7, có sắp xếp = A(7,5).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d3c6","from_de":3,"q":"Có bao nhiêu số có ba chữ số khác nhau được tạo thành từ các chữ số 2, 3, 4, 5, 6, 7, 8?","opts":["A₇³","C₇³","P₃","P₇"],"ans":0,"topic":"Tổ hợp","exp":"Chọn 3 trong 7, có thứ tự = A(7,3).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d4c6","from_de":4,"q":"Có bao nhiêu số có bốn chữ số khác nhau được tạo thành từ các chữ số 1, 2, 3, 4, 5, 6, 7?","opts":["A₇⁴","C₇⁴","P₇","P₄"],"ans":0,"topic":"Tổ hợp","exp":"A(7,4).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d5c6","from_de":5,"q":"Có bao nhiêu số có hai chữ số khác nhau được tạo thành từ các chữ số 1, 2, 3, 4, 5?","opts":["A₅²","C₅²","P₅","P₂"],"ans":0,"topic":"Tổ hợp","exp":"A(5,2).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d6c6","from_de":6,"q":"Có bao nhiêu số có bốn chữ số khác nhau được tạo thành từ các chữ số 1, 2, 3, 4, 5, 6, 7, 8?","opts":["A₈⁴","C₈⁴","P₈","P₄"],"ans":0,"topic":"Tổ hợp","exp":"A(8,4).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d8c6","from_de":8,"q":"Có bao nhiêu số có ba chữ số khác nhau được tạo thành từ các chữ số 1, 2, 3, 4, 5?","opts":["A₅³","C₅³","P₅","P₃"],"ans":0,"topic":"Tổ hợp","exp":"A(5,3) = 60.","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d9c6","from_de":9,"q":"Có bao nhiêu số có năm chữ số khác nhau được tạo thành từ các chữ số 2, 3, 4, 5, 6, 7, 8, 9?","opts":["A₈⁵","C₈⁵","P₈","P₅"],"ans":0,"topic":"Tổ hợp","exp":"A(8,5).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d10c6","from_de":10,"q":"Có bao nhiêu số có ba chữ số khác nhau được tạo thành từ các chữ số 3, 4, 5, 6, 7, 8, 9?","opts":["A₇³","C₇³","P₇","P₃"],"ans":0,"topic":"Tổ hợp","exp":"A(7,3).","slot":6,"slot_name":"Lập số có k chữ số khác nhau","level":"Biết"},{"id":"d1c7","from_de":1,"q":"Cho tập hợp A có n phần tử (n ≥ 1) và số nguyên k với 1 ≤ k ≤ n. Công thức tính số tổ hợp chập k của n phần tử là","opts":["Cₙᵏ = n!/(n-k)!","Cₙᵏ = n!/[(n-k)!·k!]","Aₙᵏ = n!/(n-k)!","Aₙᵏ = n!/[(n-k)!·k!]"],"ans":1,"topic":"Tổ hợp","exp":"Công thức tổ hợp: Cₙᵏ = n!/[(n-k)!·k!].","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d2c7","from_de":2,"q":"Cho tập hợp A có n phần tử (n ≥ 1). Công thức tính số hoán vị của n phần tử là","opts":["Pₙᵏ = n!/(n-k)!","Pₙᵏ = n!/[(n-k)!·k!]","Pₙ = n!","Pₙ = (n-1)!"],"ans":2,"topic":"Hoán vị","exp":"Số hoán vị của n phần tử là Pₙ = n!.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d3c7","from_de":3,"q":"Cho tập hợp A có n phần tử (n ≥ 1) và số nguyên k với 1 ≤ k ≤ n. Công thức tính số chỉnh hợp chập k của n phần tử là","opts":["Aₙᵏ = n!/(n-k)!","Cₙᵏ = n!/[(n-k)!·k!]","Aₙᵏ = n!/[(n-k)!·k!]","Cₙᵏ = n!/[(n-k)!·k!]"],"ans":0,"topic":"Chỉnh hợp","exp":"Aₙᵏ = n!/(n-k)!.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d4c7","from_de":4,"q":"Khẳng định nào sau đây là đúng về công thức tổ hợp?","opts":["Cₙᵏ = n!/(n-k)!","Cₙᵏ = k!·(n-k)!/n!","Cₙᵏ = n!/[(n-k)!·k!]","Cₙᵏ = (n-k)!·n!/k!"],"ans":2,"topic":"Tổ hợp","exp":"Công thức chuẩn của tổ hợp.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d5c7","from_de":5,"q":"Cho tập hợp A có n phần tử (n ≥ 1) và số nguyên k với 1 ≤ k ≤ n. Công thức nào sau đây là công thức tính số chỉnh hợp chập k của n phần tử?","opts":["Cₙᵏ = n!/(n-k)!","Aₙᵏ = n!/[(n-k)!·k!]","Aₙᵏ = n!/(n-k)!","Cₙᵏ = n!/[(n-k)!·k!]"],"ans":2,"topic":"Chỉnh hợp","exp":"Công thức chỉnh hợp Aₙᵏ = n!/(n-k)!.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d6c7","from_de":6,"q":"Cho tập hợp A có n phần tử (n ≥ 1). Khẳng định nào sau đây đúng về số hoán vị của n phần tử?","opts":["Pₙ = n!","Pₙ = (n − 1)!","Pₙ = n·(n-1)","Pₙ = 2ⁿ"],"ans":0,"topic":"Hoán vị","exp":"Pₙ = n!.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d7c7","from_de":7,"q":"Cho tập hợp A có n phần tử (n ≥ 1) và số nguyên k với 1 ≤ k ≤ n. Công thức tính số chỉnh hợp chập k của n phần tử là","opts":["Aₙᵏ = n!/(n-k)!","Aₙᵏ = n!/[(n-k)!·k!]","Aₙᵏ = n!/k!","Aₙᵏ = n!"],"ans":0,"topic":"Chỉnh hợp","exp":"Aₙᵏ = n!/(n-k)!.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d8c7","from_de":8,"q":"Nhận biết công thức nào dưới đây đúng?","opts":["Cₙᵏ = n!/[(n-k)!·k!]","Cₙᵏ = n!/(n-k)!","Aₙᵏ = n!/[(n-k)!·k!]","Pₙ = (n − 1)!"],"ans":0,"topic":"Tổ hợp","exp":"Công thức tổ hợp: Cₙᵏ = n!/[(n-k)!·k!].","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d9c7","from_de":9,"q":"Cho tập hợp A có n phần tử (n ≥ 1) và số nguyên k với 1 ≤ k ≤ n. Công thức nào dưới đây là công thức tính số tổ hợp chập k của n phần tử?","opts":["Cₙᵏ = n!/(n-k)!","Cₙᵏ = n!/[(n-k)!·k!]","Cₙᵏ = n!/k!","Cₙᵏ = (n-k)!·k!/n!"],"ans":1,"topic":"Tổ hợp","exp":"Cₙᵏ = n!/[(n-k)!·k!].","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d10c7","from_de":10,"q":"Cho tập hợp A có n phần tử (n ≥ 1). Công thức nào sau đây là công thức tính số hoán vị của n phần tử?","opts":["Pₙ = n!","Pₙ = (n − 1)!","Pₙ = n²!","Pₙ = 2·n!"],"ans":0,"topic":"Hoán vị","exp":"Pₙ = n!.","slot":7,"slot_name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},{"id":"d1c8","from_de":1,"q":"Một đồng xu cân đối được tung 4 lần liên tiếp. Mỗi lần tung, đồng xu có thể xuất hiện mặt sấp (S) hoặc mặt ngửa (N). Có bao nhiêu kết quả có thể xảy ra?","opts":["8","16","12","4"],"ans":1,"topic":"Quy tắc đếm","exp":"2⁴ = 16 kết quả.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d2c8","from_de":2,"q":"Một con xúc xắc cân đối được gieo 2 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["12","36","6","4"],"ans":1,"topic":"Quy tắc đếm","exp":"6² = 36.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d3c8","from_de":3,"q":"Một đồng xu cân đối được tung 5 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["10","25","32","16"],"ans":2,"topic":"Quy tắc đếm","exp":"2⁵ = 32.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d4c8","from_de":4,"q":"Một con xúc xắc cân đối được gieo 3 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["18","216","36","6³"],"ans":1,"topic":"Quy tắc đếm","exp":"6³ = 216.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d5c8","from_de":5,"q":"Một đồng xu cân đối được tung 6 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["12","36","64","32"],"ans":2,"topic":"Quy tắc đếm","exp":"2⁶ = 64.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d6c8","from_de":6,"q":"Một đồng xu cân đối được tung 6 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["12","36","64","6²"],"ans":2,"topic":"Quy tắc đếm","exp":"2⁶ = 64.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d7c8","from_de":7,"q":"Một đồng xu cân đối được tung 3 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["6","8","9","3²"],"ans":1,"topic":"Quy tắc đếm","exp":"2³ = 8.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d8c8","from_de":8,"q":"Một con xúc xắc cân đối được gieo 4 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["24","6⁴","4⁶","46"],"ans":1,"topic":"Quy tắc đếm","exp":"6⁴ = 1296.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d9c8","from_de":9,"q":"Một đồng xu cân đối được tung 7 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["14","49","128","7²"],"ans":2,"topic":"Quy tắc đếm","exp":"2⁷ = 128.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d10c8","from_de":10,"q":"Một con xúc xắc cân đối được gieo 2 lần liên tiếp. Có bao nhiêu kết quả có thể xảy ra?","opts":["12","36","6","2⁶"],"ans":1,"topic":"Quy tắc đếm","exp":"6² = 36.","slot":8,"slot_name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},{"id":"d1c9","from_de":1,"q":"Trong một cửa hàng có 5 loại bánh, 7 loại kẹo và 4 loại nước ngọt khác nhau. Một bạn muốn mua duy nhất một món thì số cách chọn khác nhau là","opts":["16","140","35","12"],"ans":0,"topic":"Quy tắc đếm","exp":"Quy tắc cộng: 5 + 7 + 4 = 16.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d2c9","from_de":2,"q":"Trên giá sách có 9 quyển Toán, 6 quyển Văn và 5 quyển Anh khác nhau. Một bạn muốn chọn duy nhất một quyển sách để đọc thì số cách chọn khác nhau là","opts":["270","20","60","15"],"ans":1,"topic":"Quy tắc đếm","exp":"9 + 6 + 5 = 20.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d3c9","from_de":3,"q":"Một người có 4 áo sơ mi, 3 quần tây và 5 đôi giày khác nhau. Người đó muốn chọn duy nhất một món thì số cách chọn khác nhau là","opts":["60","12","15","20"],"ans":1,"topic":"Quy tắc đếm","exp":"4 + 3 + 5 = 12.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d4c9","from_de":4,"q":"Một cửa hàng sách có 12 quyển tiểu thuyết, 8 quyển truyện tranh và 5 quyển từ điển khác nhau. Một khách muốn mua duy nhất một quyển thì số cách chọn khác nhau là","opts":["480","25","20","40"],"ans":1,"topic":"Quy tắc đếm","exp":"12 + 8 + 5 = 25.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d5c9","from_de":5,"q":"Trong một rổ trái cây có 7 quả táo, 9 quả cam và 4 quả lê khác nhau. Một bạn muốn chọn duy nhất một quả thì số cách chọn khác nhau là","opts":["252","20","28","63"],"ans":1,"topic":"Quy tắc đếm","exp":"7 + 9 + 4 = 20.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d6c9","from_de":6,"q":"Trong một cửa hàng có 6 loại bút bi, 8 loại bút chì và 4 loại thước khác nhau. Một bạn muốn mua duy nhất một món thì số cách chọn khác nhau là","opts":["192","18","24","48"],"ans":1,"topic":"Quy tắc đếm","exp":"6 + 8 + 4 = 18.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d7c9","from_de":7,"q":"Số cách chọn một quyển sách từ một giá sách có 7 quyển Toán, 5 quyển Văn và 8 quyển Lý (các quyển khác nhau) là","opts":["280","20","56","15"],"ans":1,"topic":"Quy tắc đếm","exp":"7 + 5 + 8 = 20.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d8c9","from_de":8,"q":"Trong một hộp có 10 bút đỏ, 6 bút xanh và 4 bút đen khác nhau. Một bạn muốn chọn duy nhất một chiếc bút thì số cách chọn khác nhau là","opts":["240","20","60","120"],"ans":1,"topic":"Quy tắc đếm","exp":"10 + 6 + 4 = 20.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d9c9","from_de":9,"q":"Một cửa hàng bán 15 loại bánh, 10 loại nước uống và 5 loại kẹo khác nhau. Một khách hàng muốn mua duy nhất một món thì số cách chọn khác nhau là","opts":["750","30","150","25"],"ans":1,"topic":"Quy tắc đếm","exp":"15 + 10 + 5 = 30.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d10c9","from_de":10,"q":"Trong một cửa hàng có 8 loại áo, 6 loại quần và 4 loại mũ khác nhau. Một khách hàng muốn mua duy nhất một món thì số cách chọn khác nhau là","opts":["192","18","12","48"],"ans":1,"topic":"Quy tắc đếm","exp":"8 + 6 + 4 = 18.","slot":9,"slot_name":"Quy tắc đếm cộng","level":"Biết"},{"id":"d1c10","from_de":1,"q":"Một lớp có 30 học sinh. Số cách chọn 2 học sinh trực nhật là","opts":["900","870","435","60"],"ans":2,"topic":"Tổ hợp","exp":"C(30,2) = 30·29/2 = 435.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d2c10","from_de":2,"q":"Một tổ có 10 học sinh. Số cách chọn 3 học sinh đi lao động là","opts":["720","1000","120","30"],"ans":2,"topic":"Tổ hợp","exp":"C(10,3) = 120.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d3c10","from_de":3,"q":"Một nhóm có 12 học sinh. Số cách chọn 2 học sinh đi thi là","opts":["144","132","66","24"],"ans":2,"topic":"Tổ hợp","exp":"C(12,2) = 66.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d4c10","from_de":4,"q":"Một đội có 15 vận động viên. Số cách chọn 3 vận động viên đi thi đấu là","opts":["2730","3375","455","45"],"ans":2,"topic":"Tổ hợp","exp":"C(15,3) = 455.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d5c10","from_de":5,"q":"Một tổ có 20 học sinh. Số cách chọn 4 học sinh làm ban cán sự (không phân biệt nhiệm vụ) là","opts":["116280","160000","4845","80"],"ans":2,"topic":"Tổ hợp","exp":"C(20,4) = 4845.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d6c10","from_de":6,"q":"Một lớp có 25 học sinh. Số cách chọn 2 học sinh đi trực nhật là","opts":["625","600","300","50"],"ans":2,"topic":"Tổ hợp","exp":"C(25,2) = 300.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d7c10","from_de":7,"q":"Một tổ có 8 học sinh. Số cách chọn 3 học sinh trong tổ để làm trực nhật (không phân biệt nhiệm vụ) là","opts":["336","512","56","24"],"ans":2,"topic":"Tổ hợp","exp":"C(8,3) = 56.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d8c10","from_de":8,"q":"Một câu lạc bộ có 20 thành viên. Số cách chọn 3 thành viên đi dự hội thảo (không phân biệt nhiệm vụ) là","opts":["6840","8000","1140","60"],"ans":2,"topic":"Tổ hợp","exp":"C(20,3) = 1140.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d9c10","from_de":9,"q":"Một nhóm có 20 học sinh. Số cách chọn 4 học sinh để làm ban cán sự (không phân biệt nhiệm vụ) là","opts":["116280","160000","4845","80"],"ans":2,"topic":"Tổ hợp","exp":"C(20,4) = 4845.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d10c10","from_de":10,"q":"Một câu lạc bộ có 18 thành viên. Số cách chọn 2 thành viên đi dự hội nghị (không phân biệt nhiệm vụ) là","opts":["324","306","153","36"],"ans":2,"topic":"Tổ hợp","exp":"C(18,2) = 153.","slot":10,"slot_name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},{"id":"d1c11","from_de":1,"q":"Cho phương trình đường Elip x²/25 + y²/9 = 1, mệnh đề nào dưới đây là sai?","opts":["Hai tiêu điểm là F₁(-4;0), F₂(4;0)","F₁F₂ = 8","Độ dài trục nhỏ bằng 6","Độ dài trục lớn bằng 8"],"ans":3,"topic":"Elip","exp":"a²=25, b²=9, c²=16. Trục lớn 2a = 10 (không phải 8).","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d2c11","from_de":2,"q":"Cho phương trình chính tắc Elip x²/25 + y²/9 = 1, mệnh đề nào sau đây đúng?","opts":["F₁F₂ = 8","Độ dài trục nhỏ bằng √25","F₁F₂ = √25","Độ dài trục lớn bằng 9"],"ans":0,"topic":"Elip","exp":"a²=25, b²=9, c²=16, c=4. F₁F₂ = 2c = 8.","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d3c11","from_de":3,"q":"Cho phương trình chính tắc đường parabol y² = 8x. Khẳng định nào dưới đây là sai?","opts":["F(2; 0)","Đường chuẩn Δ: x = -2","Đồ thị nằm bên phải trục Oy","Trục đối xứng của parabol là trục Oy"],"ans":3,"topic":"Parabol","exp":"Trục đối xứng của y²=2px là trục Ox, không phải Oy.","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d4c11","from_de":4,"q":"Cho phương trình chính tắc đường parabol y² = 12x. Khẳng định nào dưới đây là đúng?","opts":["F(-3; 0)","Đường chuẩn Δ: x = 3","Đồ thị nằm bên phải trục Oy","Trục đối xứng của parabol là trục Oy"],"ans":2,"topic":"Parabol","exp":"y² = 12x là parabol có đỉnh O, mở sang phải, đồ thị bên phải Oy.","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d5c11","from_de":5,"q":"Đường Elip x²/169 + y²/144 = 1 có khoảng cách 2 tiêu điểm bằng","opts":["5","10","25","144/169"],"ans":1,"topic":"Elip","exp":"a²=169, b²=144, c²=25, c=5. F₁F₂ = 2c = 10.","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d6c11","from_de":6,"q":"Cho phương trình chính tắc elip x²/16 + y²/7 = 1, mệnh đề nào dưới đây là đúng?","opts":["Hai tiêu điểm F₁(-3; 0), F₂(3; 0)","F₁F₂ = 8","Độ dài trục nhỏ bằng 7","Độ dài trục lớn bằng 8"],"ans":0,"topic":"Elip","exp":"a²=16, b²=7, c²=9, c=3. F₁(-3;0), F₂(3;0).","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d7c11","from_de":7,"q":"Cho phương trình chính tắc parabol y² = 16x. Khẳng định nào dưới đây là sai?","opts":["Tiêu điểm F(4; 0)","Đường chuẩn Δ: x = −4","Đồ thị nằm bên phải trục Oy","Trục đối xứng là trục Oy"],"ans":3,"topic":"Parabol","exp":"Trục đối xứng của y²=2px là Ox, không phải Oy.","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d8c11","from_de":8,"q":"Cho phương trình chính tắc elip x²/25 + y²/16 = 1. Tọa độ hai tiêu điểm của elip là","opts":["F₁(-3; 0), F₂(3; 0)","F₁(0; -3), F₂(0; 3)","F₁(-4; 0), F₂(4; 0)","F₁(-5; 0), F₂(5; 0)"],"ans":0,"topic":"Elip","exp":"a²=25, b²=16, c²=9, c=3. F₁(-3;0), F₂(3;0).","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d9c11","from_de":9,"q":"Cho phương trình chính tắc parabol y² = 20x. Tọa độ tiêu điểm F của parabol là","opts":["F(5; 0)","F(10; 0)","F(0; 5)","F(−5; 0)"],"ans":0,"topic":"Parabol","exp":"y² = 2px = 20x, p=10, F(p/2; 0) = F(5; 0).","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d10c11","from_de":10,"q":"Cho phương trình chính tắc elip x²/36 + y²/20 = 1. Tọa độ hai tiêu điểm của elip là","opts":["F₁(-4; 0), F₂(4; 0)","F₁(0; -4), F₂(0; 4)","F₁(-6; 0), F₂(6; 0)","F₁(-√20; 0), F₂(√20; 0)"],"ans":0,"topic":"Elip","exp":"a²=36, b²=20, c²=16, c=4.","slot":11,"slot_name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},{"id":"d1c12","from_de":1,"q":"Cho ngũ giác ABCDE. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các đỉnh của ngũ giác trên?","opts":["5²","2⁵","C₅²","A₅²"],"ans":3,"topic":"Tổ hợp","exp":"Vector có thứ tự (điểm đầu, điểm cuối) khác nhau = chỉnh hợp A(5,2).","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d2c12","from_de":2,"q":"Cho 8 điểm phân biệt. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các điểm đã cho?","opts":["C₈²","A₈²","8²","2⁸"],"ans":1,"topic":"Tổ hợp","exp":"Vector có thứ tự = A(8,2) = 56.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d3c12","from_de":3,"q":"Cho lục giác ABCDEF. Có bao nhiêu đoạn thẳng được tạo thành có điểm đầu mút là các đỉnh của lục giác trên?","opts":["A₆²","C₆²","6²","2⁶"],"ans":1,"topic":"Tổ hợp","exp":"Đoạn thẳng không có thứ tự = C(6,2) = 15.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d4c12","from_de":4,"q":"Cho 10 điểm phân biệt. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các điểm đã cho?","opts":["C₁₀²","A₁₀²","10²","2¹⁰"],"ans":1,"topic":"Tổ hợp","exp":"Vector có thứ tự = A(10,2) = 90.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d5c12","from_de":5,"q":"Cho 7 điểm phân biệt. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các điểm đã cho?","opts":["C₇²","A₇²","7²","2⁷"],"ans":1,"topic":"Tổ hợp","exp":"Vector có thứ tự = A(7,2) = 42.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d6c12","from_de":6,"q":"Cho lục giác ABCDEF. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các đỉnh của lục giác trên?","opts":["6²","2⁶","C₆²","A₆²"],"ans":3,"topic":"Tổ hợp","exp":"Vector có thứ tự = A(6,2) = 30.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d8c12","from_de":8,"q":"Cho 9 điểm phân biệt. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các điểm đã cho?","opts":["C₉²","A₉²","9²","2⁹"],"ans":1,"topic":"Tổ hợp","exp":"Vector có thứ tự = A(9,2) = 72.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d9c12","from_de":9,"q":"Cho n điểm phân biệt (n ≥ 2). Số vectơ khác vectơ-không có điểm đầu và điểm cuối là các điểm đã cho bằng","opts":["Cₙ²","Aₙ²","n²","2ⁿ"],"ans":1,"topic":"Tổ hợp","exp":"Vector có thứ tự = Aₙ².","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"},{"id":"d10c12","from_de":10,"q":"Cho bát giác ABCDEFGH. Có bao nhiêu vectơ khác vectơ-không có điểm đầu và điểm cuối là các đỉnh của bát giác trên?","opts":["8²","2⁸","C₈²","A₈²"],"ans":3,"topic":"Tổ hợp","exp":"Vector có thứ tự = A(8,2) = 56.","slot":12,"slot_name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"}];
+const MATRIX_SLOTS = {"1":{"name":"Nhận biết PT đường tròn","level":"Biết"},"2":{"name":"Nhận biết PT chính tắc elip","level":"Biết"},"3":{"name":"Xác định tâm và bán kính đường tròn","level":"Biết"},"4":{"name":"Bán kính đường tròn khi biết đường kính AB","level":"Biết"},"5":{"name":"Xác định đường chuẩn parabol","level":"Biết"},"6":{"name":"Lập số có k chữ số khác nhau","level":"Biết"},"7":{"name":"Công thức hoán vị / chỉnh hợp / tổ hợp","level":"Biết"},"8":{"name":"Khả năng khi tung đồng xu / xúc xắc k lần","level":"Biết"},"9":{"name":"Quy tắc đếm cộng","level":"Biết"},"10":{"name":"Chọn k phần tử (quy tắc nhân / tổ hợp)","level":"Biết"},"11":{"name":"Tiêu điểm conic (elip / parabol)","level":"Hiểu"},"12":{"name":"Số vectơ / đoạn thẳng từ n điểm","level":"Hiểu"}};
+
+</script>
+
+<script>
+// ============= CLOUD STORAGE (JSONBin.io) =============
+// HƯỚNG DẪN CẤU HÌNH (chỉ làm 1 LẦN, ~3 phút):
+// 1. Truy cập https://jsonbin.io  → bấm "Sign Up" (đăng ký miễn phí bằng email)
+// 2. Sau khi đăng nhập, vào "API Keys" → copy "X-Master-Key"
+// 3. Tạo bin mới: vào "Bins" → "Create Bin" → paste nội dung sau và bấm "Create":
+//      {"results":[]}
+//    Sau đó copy "Bin ID" (chuỗi dài trong URL).
+// 4. Dán giá trị vào 2 dòng dưới đây:
+
+const JSONBIN_BIN_ID = "PASTE_YOUR_BIN_ID_HERE";        // Ví dụ: "65f1a2b3c4d5e6f7a8b9c0d1"
+const JSONBIN_MASTER_KEY = "PASTE_YOUR_MASTER_KEY_HERE"; // Ví dụ: "$2a$10$abc...xyz"
+
+// 5. Đặt mật khẩu cho dashboard giáo viên (đổi tùy thích):
+const TEACHER_PASSWORD = "giaovien2025";
+
+// === KHÔNG CẦN SỬA GÌ BÊN DƯỚI ===
+const CLOUD_ENABLED = JSONBIN_BIN_ID !== "PASTE_YOUR_BIN_ID_HERE" && JSONBIN_MASTER_KEY !== "PASTE_YOUR_MASTER_KEY_HERE";
+const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+const STORAGE_KEY = 'mathquest10:results:v2';
+const PENDING_KEY = 'mathquest10:pending:v2';
+const NAME_KEY = 'mathquest10:lastname:v2';
+const QUESTIONS_PER_QUIZ = 12;
+const TIME_LIMIT_SECONDS = 12 * 60;
+
+// ============= STATE =============
+const state = {
+  playerName: '',
+  questions: [],
+  currentIdx: 0,
+  answers: [],
+  score: 0,
+  startTime: null,
+  remaining: TIME_LIMIT_SECONDS,
+  timerInterval: null,
+  cloudResults: null,        // cache khi giáo viên xem dashboard
+};
+
+// ============= LOCAL STORAGE =============
+function localGet(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+  catch (e) { return fallback; }
+}
+function localSet(key, val) {
+  try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+}
+
+// ============= CLOUD =============
+async function cloudFetchAll() {
+  if (!CLOUD_ENABLED) return null;
+  try {
+    const res = await fetch(JSONBIN_URL + '/latest', {
+      headers: { 'X-Master-Key': JSONBIN_MASTER_KEY, 'X-Bin-Meta': 'false' }
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    return Array.isArray(data?.results) ? data.results : [];
+  } catch (e) {
+    console.warn('Cloud fetch failed:', e);
+    return null;
+  }
+}
+
+async function cloudPushResult(result) {
+  if (!CLOUD_ENABLED) return false;
+  try {
+    // Read latest, append, write back. Simple approach (last-write-wins).
+    const current = await cloudFetchAll() || [];
+    current.push(result);
+    const res = await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_MASTER_KEY,
+      },
+      body: JSON.stringify({ results: current })
+    });
+    return res.ok;
+  } catch (e) {
+    console.warn('Cloud push failed:', e);
+    return false;
+  }
+}
+
+async function flushPending() {
+  const pending = localGet(PENDING_KEY, []);
+  if (pending.length === 0) return;
+  if (!CLOUD_ENABLED) return;
+  try {
+    const current = await cloudFetchAll();
+    if (current === null) return; // network failed, keep pending
+    const merged = [...current, ...pending];
+    const res = await fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_MASTER_KEY,
+      },
+      body: JSON.stringify({ results: merged })
+    });
+    if (res.ok) {
+      localSet(PENDING_KEY, []);
+    }
+  } catch (e) {
+    console.warn('Flush pending failed:', e);
+  }
+}
+
+// Save: write to local, attempt cloud, if cloud fails queue in pending
+async function saveResult(result) {
+  // Always save locally
+  const local = localGet(STORAGE_KEY, []);
+  local.push(result);
+  if (local.length > 100) local.splice(0, local.length - 100);
+  localSet(STORAGE_KEY, local);
+
+  // Try cloud
+  if (CLOUD_ENABLED) {
+    const ok = await cloudPushResult(result);
+    if (!ok) {
+      // Queue for later
+      const pending = localGet(PENDING_KEY, []);
+      pending.push(result);
+      localSet(PENDING_KEY, pending);
+    }
+  }
+}
+
+// ============= UTILS =============
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function pickRandom(arr, n) { return shuffle(arr).slice(0, n); }
+function formatTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ============= ADMIN ACCESS =============
+let logoTapCount = 0;
+let logoTapTimer = null;
+
+function checkAdminAccess() {
+  // URL param ?admin=1 → show login
+  const params = new URLSearchParams(location.search);
+  if (params.get('admin') === '1') {
+    showLogin();
+  }
+
+  // Tap logo 5 times → show login
+  document.querySelector('.logo').addEventListener('click', () => {
+    logoTapCount++;
+    if (logoTapTimer) clearTimeout(logoTapTimer);
+    logoTapTimer = setTimeout(() => { logoTapCount = 0; }, 2000);
+    if (logoTapCount >= 5) {
+      logoTapCount = 0;
+      showLogin();
+    }
+  });
+}
+
+function showLogin() {
+  const overlay = document.createElement('div');
+  overlay.className = 'login-overlay';
+  overlay.innerHTML = `
+    <div class="login-box">
+      <h2>Khu vực giáo viên</h2>
+      <p>Nhập mật khẩu để xem dashboard</p>
+      <input type="password" class="name-input" id="login-pwd" placeholder="Mật khẩu..." autofocus>
+      <div class="login-error" id="login-err"></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;">
+        <button class="btn-primary" id="login-submit">Đăng nhập</button>
+        <button class="btn-secondary" id="login-cancel">Hủy</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const pwdInput = overlay.querySelector('#login-pwd');
+  const errEl = overlay.querySelector('#login-err');
+  const submit = () => {
+    if (pwdInput.value === TEACHER_PASSWORD) {
+      overlay.remove();
+      openDashboard();
+    } else {
+      errEl.textContent = 'Mật khẩu không đúng';
+      pwdInput.value = '';
+      pwdInput.focus();
+    }
+  };
+  overlay.querySelector('#login-submit').addEventListener('click', submit);
+  overlay.querySelector('#login-cancel').addEventListener('click', () => overlay.remove());
+  pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+}
+
+// ============= HOME =============
+function initHome() {
+  document.getElementById('stat-pool').textContent = QUESTIONS_POOL.length;
+
+  const nameInput = document.getElementById('player-name');
+  const startBtn = document.getElementById('btn-start');
+  const historyBtn = document.getElementById('btn-show-history');
+
+  const lastName = localStorage.getItem(NAME_KEY) || '';
+  if (lastName) {
+    nameInput.value = lastName;
+    startBtn.disabled = false;
+    historyBtn.style.display = 'inline-block';
+  }
+
+  nameInput.addEventListener('input', () => {
+    const v = nameInput.value.trim();
+    startBtn.disabled = v.length < 2;
+    historyBtn.style.display = v.length >= 2 ? 'inline-block' : 'none';
+  });
+
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !startBtn.disabled) startQuiz();
+  });
+
+  startBtn.addEventListener('click', startQuiz);
+
+  document.getElementById('btn-show-leaderboard').addEventListener('click', async () => {
+    await renderLeaderboard();
+    showScreen('screen-leaderboard');
+  });
+
+  document.getElementById('btn-show-history').addEventListener('click', () => {
+    const name = nameInput.value.trim();
+    if (name.length < 2) return;
+    renderHistory(name);
+    showScreen('screen-history');
+  });
+
+  document.getElementById('btn-back-from-lb').addEventListener('click', () => showScreen('screen-home'));
+  document.getElementById('btn-back-from-history').addEventListener('click', () => showScreen('screen-home'));
+
+  // Update cloud status footer
+  const cs = document.getElementById('cloud-status');
+  if (CLOUD_ENABLED) {
+    cs.innerHTML = '<span class="ok">●</span> Đã đồng bộ cloud';
+  } else {
+    cs.innerHTML = '<span class="warn">●</span> Chế độ offline (chưa cấu hình cloud)';
+  }
+
+  // Try flush pending in background
+  flushPending();
+}
+
+// ============= QUIZ =============
+// Pick 1 question from each slot (1..12) following matrix
+function pickByMatrix() {
+  const result = [];
+  for (let slot = 1; slot <= 12; slot++) {
+    const candidates = QUESTIONS_POOL.filter(q => q.slot === slot);
+    if (candidates.length === 0) {
+      console.warn('No questions in slot', slot);
+      continue;
+    }
+    const picked = candidates[Math.floor(Math.random() * candidates.length)];
+    result.push(picked);
+  }
+  return result;
+}
+
+function startQuiz() {
+  const name = document.getElementById('player-name').value.trim();
+  if (name.length < 2) return;
+
+  state.playerName = name;
+  localStorage.setItem(NAME_KEY, name);
+
+  state.questions = pickByMatrix();  // Theo đúng ma trận - 1 câu mỗi slot
+  state.currentIdx = 0;
+  state.answers = [];
+  state.score = 0;
+  state.startTime = Date.now();
+  state.remaining = TIME_LIMIT_SECONDS;
+
+  startTimer();
+  showScreen('screen-quiz');
+  renderQuestion();
+}
+
+function startTimer() {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  updateTimerDisplay();
+  state.timerInterval = setInterval(() => {
+    state.remaining--;
+    updateTimerDisplay();
+    if (state.remaining <= 0) {
+      clearInterval(state.timerInterval);
+      finishQuiz(true);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const el = document.getElementById('q-timer');
+  el.textContent = formatTime(Math.max(0, state.remaining));
+  el.classList.toggle('warn', state.remaining <= 60);
+}
+
+function renderQuestion() {
+  const q = state.questions[state.currentIdx];
+  const card = document.getElementById('question-card');
+
+  document.getElementById('q-current').textContent = state.currentIdx + 1;
+  document.getElementById('q-score').textContent = state.score;
+  document.getElementById('progress-fill').style.width = ((state.currentIdx) / QUESTIONS_PER_QUIZ * 100) + '%';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  const optionsHtml = q.opts.map((opt, i) => `
+    <button class="option" data-idx="${i}">
+      <span class="letter">${letters[i]}</span>
+      <span class="text">${escapeHtml(opt)}</span>
+    </button>
+  `).join('');
+
+  const slotName = q.slot_name || q.topic;
+  const levelTag = q.level === 'Hiểu' ? '<span class="level-tag hieu">Hiểu</span>' : '<span class="level-tag biet">Biết</span>';
+  card.innerHTML = `
+    <div class="question-meta">
+      <div class="question-num">Câu ${state.currentIdx + 1} ${levelTag}</div>
+      <div class="question-topic">${escapeHtml(slotName)}</div>
+    </div>
+    <div class="question-text">${escapeHtml(q.q)}</div>
+    <div class="options" id="options-list">${optionsHtml}</div>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  document.getElementById('btn-next').classList.remove('show');
+  card.querySelectorAll('.option').forEach(btn => {
+    btn.addEventListener('click', () => handleAnswer(parseInt(btn.dataset.idx)));
+  });
+}
+
+function handleAnswer(pickedIdx) {
+  const q = state.questions[state.currentIdx];
+  const isRight = pickedIdx === q.ans;
+
+  state.answers.push({
+    qid: q.id,
+    picked: pickedIdx,
+    correct: q.ans,
+    isRight: isRight,
+  });
+
+  if (isRight) state.score++;
+
+  const options = document.querySelectorAll('#options-list .option');
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (i === q.ans) opt.classList.add('correct');
+    else if (i === pickedIdx) opt.classList.add('wrong');
+  });
+
+  document.getElementById('q-score').textContent = state.score;
+
+  const feedback = document.getElementById('feedback');
+  const letters = ['A', 'B', 'C', 'D'];
+  if (isRight) {
+    feedback.className = 'feedback correct show';
+    feedback.innerHTML = `
+      <div class="feedback-title">✓ Chính xác!</div>
+      ${q.exp ? `<div class="feedback-body">${escapeHtml(q.exp)}</div>` : ''}
+    `;
+  } else {
+    feedback.className = 'feedback wrong show';
+    feedback.innerHTML = `
+      <div class="feedback-title">✗ Chưa đúng — đáp án đúng là ${letters[q.ans]}</div>
+      ${q.exp ? `<div class="feedback-body">${escapeHtml(q.exp)}</div>` : ''}
+    `;
+  }
+
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.classList.add('show');
+  nextBtn.textContent = state.currentIdx === QUESTIONS_PER_QUIZ - 1 ? 'Xem kết quả →' : 'Câu tiếp theo →';
+}
+
+document.getElementById('btn-next').addEventListener('click', () => {
+  state.currentIdx++;
+  if (state.currentIdx >= QUESTIONS_PER_QUIZ) finishQuiz(false);
+  else renderQuestion();
+});
+
+// ============= FINISH =============
+async function finishQuiz(timedOut) {
+  if (state.timerInterval) clearInterval(state.timerInterval);
+  const timeSec = TIME_LIMIT_SECONDS - state.remaining;
+
+  // Build compact result for cloud (no full question text — only ids)
+  const result = {
+    name: state.playerName,
+    score: state.score,
+    total: QUESTIONS_PER_QUIZ,
+    timeSec: timeSec,
+    timedOut: timedOut,
+    date: Date.now(),
+    answers: state.answers, // {qid, picked, correct, isRight}
+  };
+
+  // Keep full questions locally for review (don't push to cloud to save space)
+  const localResult = { ...result, questions: state.questions };
+  const local = localGet(STORAGE_KEY, []);
+  local.push(localResult);
+  if (local.length > 100) local.splice(0, local.length - 100);
+  localSet(STORAGE_KEY, local);
+
+  // Push compact result to cloud
+  if (CLOUD_ENABLED) {
+    const ok = await cloudPushResult(result);
+    if (!ok) {
+      const pending = localGet(PENDING_KEY, []);
+      pending.push(result);
+      localSet(PENDING_KEY, pending);
+    }
+  }
+
+  renderResult(localResult);
+  showScreen('screen-result');
+}
+
+function renderResult(result) {
+  const pct = result.score / result.total;
+  let emoji, title, subtitle;
+  if (pct === 1) { emoji = '🏆'; title = 'Xuất sắc!'; subtitle = 'Đạt điểm tuyệt đối — bạn quá đỉnh!'; fireConfetti(); }
+  else if (pct >= 0.83) { emoji = '🎉'; title = 'Rất tốt!'; subtitle = 'Bạn đã làm bài rất tốt'; fireConfetti(); }
+  else if (pct >= 0.67) { emoji = '👏'; title = 'Khá!'; subtitle = 'Bạn đã làm khá tốt, cố gắng thêm chút nữa nhé'; }
+  else if (pct >= 0.5) { emoji = '💪'; title = 'Trung bình'; subtitle = 'Cần ôn thêm các phần chưa nắm vững'; }
+  else { emoji = '📚'; title = 'Hãy ôn lại'; subtitle = result.timedOut ? 'Hết giờ rồi! Lần sau cố gắng nhanh hơn.' : 'Đừng nản, làm lại để cải thiện nhé!'; }
+
+  document.getElementById('r-emoji').textContent = emoji;
+  document.getElementById('r-title').textContent = title;
+  document.getElementById('r-subtitle').textContent = subtitle;
+  document.getElementById('r-score').textContent = result.score;
+  document.getElementById('r-correct').textContent = result.score;
+  document.getElementById('r-wrong').textContent = result.total - result.score;
+  document.getElementById('r-time').textContent = formatTime(result.timeSec);
+
+  const reviewList = document.getElementById('review-list');
+  const letters = ['A', 'B', 'C', 'D'];
+  reviewList.innerHTML = result.questions.map((q, i) => {
+    const ans = result.answers[i];
+    if (!ans) {
+      return `
+        <div class="review-item wrong">
+          <div class="review-q">Câu ${i+1}: ${escapeHtml(q.q)}</div>
+          <div class="review-meta">
+            <span class="your wrong">Chưa trả lời</span>
+            <span class="correct-ans">Đáp án đúng: ${letters[q.ans]}. ${escapeHtml(q.opts[q.ans])}</span>
+          </div>
+        </div>
+      `;
+    }
+    return `
+      <div class="review-item ${ans.isRight ? 'correct' : 'wrong'}">
+        <div class="review-q">Câu ${i+1}: ${escapeHtml(q.q)}</div>
+        <div class="review-meta">
+          <span class="your ${ans.isRight ? 'right' : 'wrong'}">Bạn chọn: ${letters[ans.picked]}. ${escapeHtml(q.opts[ans.picked])}</span>
+          ${!ans.isRight ? `<span class="correct-ans">Đáp án đúng: ${letters[q.correct]}. ${escapeHtml(q.opts[q.correct])}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Mini leaderboard
+  renderLeaderboardInto('result-leaderboard', 5);
+}
+
+document.getElementById('btn-retry').addEventListener('click', startQuiz);
+document.getElementById('btn-home').addEventListener('click', () => showScreen('screen-home'));
+
+// ============= LEADERBOARD =============
+async function getCombinedResults() {
+  if (CLOUD_ENABLED) {
+    const cloud = await cloudFetchAll();
+    if (cloud) return cloud;
+  }
+  // Fallback to local
+  return localGet(STORAGE_KEY, []);
+}
+
+async function getLeaderboardData() {
+  const all = await getCombinedResults();
+  const byPlayer = {};
+  all.forEach(r => {
+    const key = r.name.toLowerCase().trim();
+    if (!byPlayer[key]) {
+      byPlayer[key] = r;
+    } else {
+      const cur = byPlayer[key];
+      if (r.score > cur.score || (r.score === cur.score && r.timeSec < cur.timeSec)) {
+        byPlayer[key] = r;
+      }
+    }
+  });
+  return Object.values(byPlayer).sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return a.timeSec - b.timeSec;
+  });
+}
+
+async function renderLeaderboard() {
+  await renderLeaderboardInto('lb-list', 100);
+}
+
+async function renderLeaderboardInto(elId, limit) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '<div class="empty-lb">Đang tải<span class="loading-dots"></span></div>';
+  try {
+    const lb = (await getLeaderboardData()).slice(0, limit);
+    if (lb.length === 0) {
+      el.innerHTML = '<div class="empty-lb">Chưa có dữ liệu — hãy là người đầu tiên!</div>';
+      return;
+    }
+    const myName = state.playerName.toLowerCase().trim();
+    el.innerHTML = lb.map((r, i) => {
+      const rank = i + 1;
+      let rowClass = '';
+      if (rank === 1) rowClass = 'gold';
+      else if (rank === 2) rowClass = 'silver';
+      else if (rank === 3) rowClass = 'bronze';
+      if (myName && r.name.toLowerCase().trim() === myName) rowClass += ' me';
+      const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '#' + rank;
+      return `
+        <div class="lb-row ${rowClass}">
+          <div class="lb-rank">${medal}</div>
+          <div class="lb-name">${escapeHtml(r.name)}</div>
+          <div class="lb-time">${formatTime(r.timeSec)}</div>
+          <div class="lb-score">${r.score}/${r.total}</div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    el.innerHTML = '<div class="empty-lb">Lỗi tải dữ liệu</div>';
+  }
+}
+
+// ============= HISTORY =============
+async function renderHistory(name) {
+  document.getElementById('history-name').textContent = name;
+  const list = document.getElementById('history-list');
+  list.innerHTML = '<div class="empty-lb">Đang tải<span class="loading-dots"></span></div>';
+
+  const all = await getCombinedResults();
+  const key = name.toLowerCase().trim();
+  const history = all
+    .filter(r => r.name.toLowerCase().trim() === key)
+    .sort((a, b) => b.date - a.date);
+
+  if (history.length === 0) {
+    list.innerHTML = '<div class="empty-lb">Chưa có lượt làm bài nào.</div>';
+    return;
+  }
+  list.innerHTML = history.slice(0, 50).map((r, i) => {
+    const d = new Date(r.date);
+    const dateStr = d.toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
+    return `
+      <div class="history-card">
+        <div>
+          <div style="font-weight:600;margin-bottom:4px;">Lượt ${history.length - i}</div>
+          <div class="history-info">${dateStr} · ${formatTime(r.timeSec)}${r.timedOut ? ' · Hết giờ' : ''}</div>
+        </div>
+        <div class="history-score">${r.score}/${r.total}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============= CONFETTI =============
+function fireConfetti() {
+  const colors = ['#ffd23f', '#ff6b6b', '#4ecdc4', '#6bcf7f', '#f0ebe1'];
+  for (let i = 0; i < 50; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(c);
+      const fallDur = 2.5 + Math.random() * 2;
+      const drift = (Math.random() - 0.5) * 200;
+      c.animate([
+        { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${drift}px, 105vh) rotate(${720 + Math.random()*360}deg)`, opacity: 0.3 }
+      ], { duration: fallDur * 1000, easing: 'cubic-bezier(.2,.6,.4,1)' });
+      setTimeout(() => c.remove(), fallDur * 1000);
+    }, i * 30);
+  }
+}
+
+// ============= DASHBOARD =============
+async function openDashboard() {
+  showScreen('screen-dashboard');
+  await refreshDashboard();
+}
+
+async function refreshDashboard() {
+  const statusEl = document.getElementById('refresh-status');
+  statusEl.className = 'refresh-status loading';
+  statusEl.innerHTML = '<span class="dot"></span>Đang tải dữ liệu<span class="loading-dots"></span>';
+
+  let results;
+  if (CLOUD_ENABLED) {
+    results = await cloudFetchAll();
+    if (results === null) {
+      statusEl.className = 'refresh-status error';
+      statusEl.innerHTML = '<span class="dot"></span>Không kết nối được cloud';
+      results = localGet(STORAGE_KEY, []);
+    } else {
+      statusEl.className = 'refresh-status';
+      const now = new Date();
+      statusEl.innerHTML = `<span class="dot"></span>Đã cập nhật lúc ${now.toLocaleTimeString('vi-VN')}`;
+    }
+  } else {
+    results = localGet(STORAGE_KEY, []);
+    statusEl.className = 'refresh-status error';
+    statusEl.innerHTML = '<span class="dot"></span>Chỉ xem dữ liệu trên máy này (chưa cấu hình cloud)';
+  }
+
+  state.cloudResults = results;
+  renderDashboard(results);
+}
+
+function renderDashboard(results) {
+  // === TOTALS ===
+  const totalAttempts = results.length;
+  const uniqueStudents = new Set(results.map(r => r.name.toLowerCase().trim())).size;
+  const avgScore = totalAttempts > 0
+    ? (results.reduce((s, r) => s + r.score, 0) / totalAttempts).toFixed(1)
+    : '0';
+  const passCount = results.filter(r => r.score / r.total >= 0.5).length;
+  const passRate = totalAttempts > 0 ? Math.round(passCount / totalAttempts * 100) : 0;
+
+  document.getElementById('dash-total-attempts').textContent = totalAttempts;
+  document.getElementById('dash-unique-students').textContent = uniqueStudents;
+  document.getElementById('dash-avg-score').textContent = avgScore;
+  document.getElementById('dash-pass-rate').textContent = passRate + '%';
+
+  // === HISTOGRAM (score distribution) ===
+  const buckets = Array(13).fill(0); // 0..12
+  results.forEach(r => { buckets[r.score]++; });
+  const maxBucket = Math.max(...buckets, 1);
+
+  const histHtml = buckets.map((c, i) => {
+    const pct = (c / maxBucket * 100);
+    const heightPx = pct > 0 ? Math.max(3, pct * 1.7) : 3;
+    return `
+      <div class="hist-bar-wrap">
+        <div class="hist-bar" style="height:${heightPx}px;" title="${i} điểm: ${c} lượt">
+          ${c > 0 ? `<span class="count">${c}</span>` : ''}
+        </div>
+        <div class="hist-label">${i}</div>
+      </div>
+    `;
+  }).join('');
+  document.getElementById('histogram').innerHTML = histHtml;
+
+  // === QUESTIONS WITH HIGHEST WRONG RATE ===
+  const qStats = {};
+  results.forEach(r => {
+    (r.answers || []).forEach(a => {
+      if (!qStats[a.qid]) qStats[a.qid] = { total: 0, wrong: 0 };
+      qStats[a.qid].total++;
+      if (!a.isRight) qStats[a.qid].wrong++;
+    });
+  });
+
+  const qStatsArr = Object.entries(qStats)
+    .filter(([, s]) => s.total >= 1)
+    .map(([qid, s]) => {
+      const q = QUESTIONS_POOL.find(qq => qq.id === qid);
+      return {
+        qid,
+        q,
+        total: s.total,
+        wrong: s.wrong,
+        rate: s.wrong / s.total,
+      };
+    })
+    .filter(x => x.q)
+    .sort((a, b) => b.rate - a.rate)
+    .slice(0, 10);
+
+  const qStatsEl = document.getElementById('qstats-list');
+  if (qStatsArr.length === 0) {
+    qStatsEl.innerHTML = '<div class="empty-lb">Chưa có dữ liệu</div>';
+  } else {
+    const letters = ['A', 'B', 'C', 'D'];
+    qStatsEl.innerHTML = qStatsArr.map((x, i) => {
+      const ratePct = Math.round(x.rate * 100);
+      const cls = ratePct >= 60 ? 'high' : ratePct >= 35 ? 'mid' : 'low';
+      const slotName = x.q.slot_name || x.q.topic;
+      const slotInfo = x.q.slot ? `Câu ${x.q.slot} (${x.q.level})` : '';
+      return `
+        <div class="qstat-item">
+          <div class="qstat-header">
+            <div class="qstat-q">${escapeHtml(x.q.q)}</div>
+            <div class="qstat-rate ${cls}">${ratePct}% sai</div>
+          </div>
+          <div class="qstat-bar">
+            <div class="qstat-bar-fill ${cls}" style="width:${ratePct}%"></div>
+          </div>
+          <div class="qstat-meta">
+            <span class="topic">${slotInfo ? slotInfo + ' · ' : ''}${escapeHtml(slotName)} · Đáp án: ${letters[x.q.ans]}</span>
+            <span>${x.wrong}/${x.total} lượt sai</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // === STUDENT LIST ===
+  const byStudent = {};
+  results.forEach(r => {
+    const key = r.name.toLowerCase().trim();
+    if (!byStudent[key]) {
+      byStudent[key] = {
+        name: r.name,
+        attempts: 0,
+        bestScore: 0,
+        avgScore: 0,
+        scoreSum: 0,
+        bestTime: Infinity,
+        lastDate: 0,
+      };
+    }
+    const s = byStudent[key];
+    s.attempts++;
+    s.scoreSum += r.score;
+    if (r.score > s.bestScore) {
+      s.bestScore = r.score;
+      s.bestTime = r.timeSec;
+    } else if (r.score === s.bestScore && r.timeSec < s.bestTime) {
+      s.bestTime = r.timeSec;
+    }
+    if (r.date > s.lastDate) s.lastDate = r.date;
+  });
+
+  Object.values(byStudent).forEach(s => {
+    s.avgScore = (s.scoreSum / s.attempts).toFixed(1);
+  });
+
+  const studentsArr = Object.values(byStudent).sort((a, b) => {
+    if (b.bestScore !== a.bestScore) return b.bestScore - a.bestScore;
+    return a.bestTime - b.bestTime;
+  });
+
+  const studentsEl = document.getElementById('students-list');
+  if (studentsArr.length === 0) {
+    studentsEl.innerHTML = '<div class="empty-lb">Chưa có học sinh nào làm bài</div>';
+  } else {
+    studentsEl.innerHTML = `
+      <div style="overflow-x:auto;">
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th style="width:40px;">#</th>
+            <th>Họ và tên</th>
+            <th class="num">Số lượt</th>
+            <th class="num">Điểm cao nhất</th>
+            <th class="num">Điểm TB</th>
+            <th class="num">Thời gian</th>
+            <th>Lần cuối</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${studentsArr.map((s, i) => {
+            const best = s.bestScore;
+            const cls = best >= 10 ? 'green' : best >= 8 ? 'amber' : 'red';
+            const d = new Date(s.lastDate);
+            return `
+              <tr>
+                <td class="num">${i+1}</td>
+                <td class="name-cell">${escapeHtml(s.name)}</td>
+                <td class="num">${s.attempts}</td>
+                <td class="score ${cls}">${best}/12</td>
+                <td class="num">${s.avgScore}</td>
+                <td class="num">${formatTime(s.bestTime)}</td>
+                <td>${d.toLocaleString('vi-VN', {dateStyle:'short', timeStyle:'short'})}</td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+      </div>
+    `;
+  }
+}
+
+document.getElementById('btn-dash-refresh').addEventListener('click', refreshDashboard);
+document.getElementById('btn-dash-home').addEventListener('click', () => showScreen('screen-home'));
+
+// ============= INIT =============
+initHome();
+checkAdminAccess();
+
+</script>
+
+</body>
+</html>
